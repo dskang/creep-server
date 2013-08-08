@@ -9,7 +9,7 @@ app.get('/', function(request, response) {
   if (currentUrl == 'http://creep.dskang.com/') {
     response.send("I'm here too!");
   } else {
-    response.send('<iframe width="100%" height="100%" src="' + currentUrl + '"></iframe>')
+    response.redirect(currentUrl);
   }
 });
 
