@@ -6,7 +6,11 @@ app.use(express.bodyParser());
 currentUrl = null;
 
 app.get('/', function(request, response) {
+  if (currentUrl == 'http://creep.dskang.com/') {
+    response.send("I'm here too!");
+  } else {
     response.redirect(currentUrl);
+  }
 });
 
 app.post('/url', function(request, response) {
