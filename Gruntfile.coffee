@@ -1,7 +1,8 @@
 module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
-  grunt.loadNpmTasks 'grunt-express-server'
+  grunt.loadNpmTasks 'grunt-nodemon'
+  grunt.loadNpmTasks 'grunt-concurrent'
 
   grunt.initConfig
     watch:
@@ -9,19 +10,26 @@ module.exports = (grunt) ->
         files: ["app.coffee"]
         tasks: ["coffee"]
 
-    express:
-      options:
-        port: 5000
-        script: "app.js"
-      development: {}
-
     coffee:
       server:
         files:
           "app.js": "app.coffee"
 
+    nodemon:
+      dev:
+        options:
+          file: "app.js"
+
+    concurrent:
+      target:
+        tasks: [
+          "nodemon"
+          "watch"
+        ]
+        options:
+          logConcurrentOutput: true
+
   grunt.registerTask "default", [
     "coffee"
-    "express"
-    "watch"
+    "concurrent"
   ]

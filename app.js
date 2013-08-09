@@ -18,7 +18,7 @@
   app.post('/url', function(req, res) {
     currentUrl = req.body.url;
     console.log("URL: " + currentUrl);
-    return response.send(200);
+    return res.send(200);
   });
 
   port = process.env.PORT || 5000;
