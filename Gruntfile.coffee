@@ -7,18 +7,18 @@ module.exports = (grunt) ->
   grunt.initConfig
     watch:
       coffee:
-        files: ["app.coffee"]
+        files: ["src/app.coffee"]
         tasks: ["coffee"]
 
     coffee:
       server:
         files:
-          "app.js": "app.coffee"
+          "target/app.js": "src/app.coffee"
 
     nodemon:
       dev:
         options:
-          file: "app.js"
+          file: "target/app.js"
 
     concurrent:
       target:
