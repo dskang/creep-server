@@ -1,5 +1,5 @@
 (function() {
-  var app, currentUrl, express, port;
+  var app, currentUrl, express, isActive, mostRecentTime, port;
 
   express = require('express');
 
@@ -11,16 +11,23 @@
 
   currentUrl = null;
 
+  mostRecentTime = null;
+
+  isActive = function() {
+    return (mostRecentTime != null) && Date.now() - mostRecentTime < 15 * 60 * 1000;
+  };
+
   app.get('/', function(req, res) {
-    if (currentUrl != null) {
+    if ((currentUrl != null) && isActive()) {
       return res.redirect(currentUrl);
     } else {
-      return res.send("Looks like DK hasn't been online in a while...");
+      return res.send("dk is currently offline. #sorrynotsorry");
     }
   });
 
   app.post('/url', function(req, res) {
     currentUrl = req.body.url;
+    mostRecentTime = Date.now();
     console.log("URL: " + currentUrl);
     return res.send(200);
   });

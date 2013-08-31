@@ -4,15 +4,20 @@ app.use express.logger()
 app.use express.bodyParser()
 
 currentUrl = null
+mostRecentTime = null
+
+isActive = ->
+  mostRecentTime? && Date.now() - mostRecentTime < 15 * 60 * 1000
 
 app.get '/', (req, res) ->
-  if currentUrl?
+  if currentUrl? and isActive()
     res.redirect(currentUrl)
   else
-    res.send "Looks like DK hasn't been online in a while..."
+    res.send "dk is currently offline. #sorrynotsorry"
 
 app.post '/url', (req, res) ->
   currentUrl = req.body.url
+  mostRecentTime = Date.now()
   console.log "URL: #{currentUrl}"
   res.send 200
 
