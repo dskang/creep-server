@@ -6,7 +6,10 @@ app.use express.bodyParser()
 currentUrl = null
 
 app.get '/', (req, res) ->
-  res.redirect(currentUrl)
+  if currentUrl?
+    res.redirect(currentUrl)
+  else
+    res.send "Looks like DK hasn't been online in a while..."
 
 app.post '/url', (req, res) ->
   currentUrl = req.body.url

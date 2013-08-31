@@ -12,7 +12,11 @@
   currentUrl = null;
 
   app.get('/', function(req, res) {
-    return res.redirect(currentUrl);
+    if (currentUrl != null) {
+      return res.redirect(currentUrl);
+    } else {
+      return res.send("Looks like DK hasn't been online in a while...");
+    }
   });
 
   app.post('/url', function(req, res) {
